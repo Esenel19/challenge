@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Commentaire Produit
+{% endblock %}
+
+{% block body %}
+
+{{ form_start(commentaireForm) }}
+        <h1>Commenter le produit</h1> 
+        {{ form_row(commentaireForm.contenu) }}
+        {{ form_rest(commentaireForm) }}
+{{ form_end(commentaireForm) }}
+
+
+{% endblock %}

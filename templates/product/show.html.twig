@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} Detail Article {% endblock %}
+
+{% block body %}
+
+
+
+<div class="container mt-3">
+    <h1 class="text-center" style="color:white">Detail Produit</h1>
+    <br>
+    <h2 class="text-center mb-3" style="color:white">Nom Produit : {{product.title}}</h2>
+    <div class="d-flex flex-column justify-content-center">
+        <div class="d-flex flex-row mb-3 mt-3 justify-content-center">
+            <div class="d-flex flex-column col-4">
+                <img class="w-100" src="{{ asset('img/') ~ product.image }}" alt="Image de {{ product.title }}">
+                <br>
+                <div class="d-flex flex-column " style="color:white">
+                    Prix Produit : {{product.price}} $
+                </div>
+                <br>
+                <div class="d-flex flex-column" style="color:white">
+                    Commentaires de l'article :
+                    <br>
+                    
+                    {% set count = 0 %}
+                    {% for commentaire in commentaires %}
+                        {% set count = count + 1 %}
+                        {{commentaire.id - commentaire.id + count}}. {{commentaire.contenu}} -  
+                    {% endfor %}
+                </div>
+
+                <div class="card-body text-end">
+					<a href="{{ path('new_commentaire', { id: product.id}) }}" class="card-link btn btn-primary">
+						Commenter Produit</a>
+				</div>
+            </div>       
+        </div>
+    </div>
+</div>
+
+{% endblock %}

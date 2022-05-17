@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier{% endblock %}
+
+{% block body %}
+
+<h1 class="text-center" style="color:white"> Mon panier </h1>
+
+{% if items %}
+    <table class="table" style="color:white">
+        <thead>
+            <tr>
+                <th style="color:white">Produit</th>
+                <th style="color:white">Prix</th>
+                <th style="color:white">Quantite</th>
+                <th style="color:white">Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.product.price }}</td>
+                <td>
+                    <a href="{{ path('cart_substract', {id: item.product.id}) }}" class="btn-sm btn-danger">
+                        <i class="icon-minus-sign"></i>
+                    </a>
+                    {{ item.quantity }}
+                    <a href="{{ path('cart_add', {id: item.product.id}) }}" class="btn-sm btn-success">
+                        <i class="icon-plus-sign"></i>
+                    </a>
+                </td>
+                <td>{{ item.product.price * item.quantity }}$</td>
+                <td>
+                    <a href="{{ path('cart_remove', {id: item.product.id}) }}" class="btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>  
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="text-end">Total :</td>
+                <td>
+                    {{ total }}$
+                    <a href="{{ path('cart_remove_all') }}" class="btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('cart_achat') }}" class="btn-sm btn-success">
+                        <i class="fa fa-shopping-cart">Payer</i>
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% else %}
+
+    <p class="text-panier">Mon panier est vide</p>
+
+{% endif %}
+
+{% endblock %}

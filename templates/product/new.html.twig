@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajouter une activité
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(productForm) }}
+        <h1>Ajouter une activité</h1> 
+        {{ form_row(productForm.title) }}
+        {{ form_row(productForm.image) }}
+        {{ form_row(productForm.price) }}
+        {{ form_row(productForm.description) }}
+        {{ form_rest(productForm) }}
+        <button type="submit"class="btn btn-lg btn-primary">Creation Activités</button>
+        
+    {{ form_end(productForm) }}
+
+{% endblock %}
