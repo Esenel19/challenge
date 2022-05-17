@@ -1,20 +1,130 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}
-    Ajouter une activité
-{% endblock %}
+<title>Créer,une activitée</title>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    </head>
 
 {% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="{{path('home')}}">JoinUs</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
+						</li>
+						<li class="nav-item">
+							{# <a class="nav-link active position-relative" href="{{path('app_cart')}}">Panier #}
+								{#  avec Twig, on use de mot-clef 'set' pour creer des var #}
+								{# nous allons creer une var nbProduits qui contiendra kes nb total de produits #}
+								{# pour recup un attr de session, on use app.session #}
 
-    {{ form_start(productForm) }}
-        <h1>Ajouter une activité</h1> 
-        {{ form_row(productForm.title) }}
-        {{ form_row(productForm.image) }}
-        {{ form_row(productForm.price) }}
-        {{ form_row(productForm.description) }}
-        {{ form_rest(productForm) }}
-        <button type="submit"class="btn btn-lg btn-primary">Creation Activités</button>
-        
-    {{ form_end(productForm) }}
+								{% set nbProduits = app.session.get('qt') %}
+
+									{% if nbProduits > 0 %}
+										<span class="position-absolute top-25 start-100 translate-middle badge rounded-pill bg-danger"> {{nbProduits}}</span>
+
+								{% endif %}
+
+							</a>
+
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_product')}}">Activités</a>
+						</li>
+
+						{% if app.user %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path("app_logout") }}">Se deconnecter</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path("app_profil") }}">Profile</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{path('new_product')}}">Add Activitées</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path("app_register") }}">S'enregistrer</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{ path("app_login") }}">Se connecter</a>
+							</li>
+						{% endif %}
+
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('app_contact')}}">Contacter nous</a>
+						</li>
+					</ul>
+					{# <form class="d-flex">
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form> #}
+				</div>
+			</div>
+		</nav>
+
+     {{ form_start(productForm) }}
+    
+
+    <section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Ajouter une activitée</p>
+
+                <form class="mx-1 mx-md-4">
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <div class="form-outline flex-fill mb-0">
+                      {{form_widget(productForm.title, {
+                        required: true
+                      })}}
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <div class="form-outline flex-fill mb-0">
+                      {{form_widget(productForm.description, {
+                        required: true
+                      })}}
+                    </div>
+                  </div>
+
+                   <div class="d-flex flex-row align-items-center mb-4">
+                    <div class="form-outline flex-fill mb-0">
+                     {{form_widget(productForm.image, {
+                         required: false
+                     })}}
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <div class="form-outline flex-fill mb-0">
+                     {{form_widget(productForm.categorie, {
+                         required: true
+                     })}}
+                     
+                    </div>
+                  </div>
+
+
+
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Confirmer</button>
+                  </div>
+
+                </form>
+
+                  {{ form_end(productForm) }}
 
 {% endblock %}

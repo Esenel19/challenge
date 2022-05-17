@@ -2,14 +2,14 @@
 
 
 {% block title %}
-	Detail Article
+	Detail Activité
 {% endblock %}
 
 {% block body %}
 
 
 	<div class="container mt-3">
-		<h1 class="text-center" style="color:white">Mes Produit</h1>
+		<h1 class="text-center" style="color:white">Mes Activité</h1>
 		{% for product in productsUser %}
 			{% set present_user = app.user.id %}
 			{% set product_user = product.user.id %}
@@ -19,8 +19,8 @@
 				<div class="d-flex flex-column">
 					<img src="{{ asset('img/') ~ product.image }}" alt="Image de {{ product.title }}" style="width: 20%;height: auto;">
 					<br>
-					<p class="p-produit-prix">Prix : {{product.price}} $</p>
-					<p class="p-produit-title">Titre Produit : {{product.title}}</p>
+					{# <p class="p-produit-prix">Prix : {{product.price}} $</p> #}
+					<p class="p-produit-title">Titre Activité : {{product.title}}</p>
 				</div>
 			{% endif %}
 

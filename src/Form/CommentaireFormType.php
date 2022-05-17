@@ -15,7 +15,7 @@ class CommentaireFormType extends AbstractType
         $builder
             
             ->add('contenu', TextType::class,[
-                'label' => 'Commenter le produit'
+                'label' => 'Commenter l\'activité'
             ])
             
         ;

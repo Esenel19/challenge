@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Product;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 class ProductFormType extends AbstractType
@@ -14,21 +17,35 @@ class ProductFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', null,[
-                'label' => 'Title'
+        ->add('title', TextType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'Nom de l\'activitée',
+                'require' => 'true'
+                ]
             ])
-            ->add('image', null,[
-                'label' => 'Inserer le nom de l\'image avec son extension'
+        ->add('description', TextType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'Description',
+            ]
+        ])
+        ->add('image', TextType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'Lien image',
+                'required' =>false,
+                ]
             ])
-            ->add('price', null,[
-                'label' => 'Prix du produit'
-            ])
-            ->add('categorie', null,[
-                'label' => 'Ajouter Categorie'
-            ])
-            ->add('description', null,[
-                'label' => 'Description'
-            ])
+        ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'title',
+                'attr' => [
+                'class' => 'form-select',
+                'placeholder' => 'Categorie',
+                ]
+            
+        ])
             
         ;
     }
