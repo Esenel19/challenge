@@ -18,6 +18,9 @@ class Product
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
+    #[ORM\Column(type: 'float')]
+    private $price;
+
     #[ORM\Column(type: 'string', length: 255)]
     private $image;
 
@@ -45,10 +48,10 @@ class Product
         $this->commentaires = new ArrayCollection();
     }
 
-    public function __toString(): string
-    {
-        return $this->city.' '.$this->year;
-    }
+    // public function __toString(): string
+    // {
+    //     return $this->city.' '.$this->year;
+    // }
 
     public function getId(): ?int
     {
@@ -63,6 +66,18 @@ class Product
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

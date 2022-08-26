@@ -20,7 +20,7 @@ class ProductFormType extends AbstractType
         ->add('title', TextType::class, [
             'attr' => [
                 'class' => 'form-control',
-                'placeholder' => 'Nom de l\'activitée',
+                'placeholder' => 'Nom du produit',
                 'require' => 'true'
                 ]
             ])
@@ -30,10 +30,12 @@ class ProductFormType extends AbstractType
                 'placeholder' => 'Description',
             ]
         ])
-        ->add('image', TextType::class, [
+        ->add('image', FileType::class, [
             'attr' => [
                 'class' => 'form-control',
-                'placeholder' => 'Lien image',
+                // 'placeholder' => 'Lien image',
+                // 'label' => 'Brochure (PDF file)',
+                'mapped' => false,
                 'required' =>false,
                 ]
             ])
@@ -45,7 +47,13 @@ class ProductFormType extends AbstractType
                 'placeholder' => 'Categorie',
                 ]
             
-        ])
+            ])
+        ->add('price', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Prix du produit',
+                 ]
+            ])
             
         ;
     }

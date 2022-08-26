@@ -75,4 +75,17 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getActiviteByName($saisie)
+    {
+        // createQueryBuilder() permet de créer une requête SQL
+        // elle prend en arg un alias qui représente la table
+
+        return $this->createQueryBuilder('p')
+                    ->andWhere('p.title LIKE :val')
+                    ->setParameter('val', "%$saisie%")
+                    ->orderBy('p.title', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
 }

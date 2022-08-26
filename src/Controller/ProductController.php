@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Commentaire;
+use App\Form\RechercheType;
 use App\Form\ProductFormType;
 use App\Repository\ProductRepository;
 use Doctrine\Persistence\ObjectManager;
@@ -21,11 +22,25 @@ class ProductController extends AbstractController
 
 
     #[Route('/product', name: 'app_product')]
-    public function index(ProductRepository $repo): Response
+    public function index(ProductRepository $repo, Request $request): Response
     {
-        $products = $repo -> findAll();
+        $form = $this->createForm(RechercheType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->get('recherche')->getData();
+            $products = $repo->getActiviteByName($data);
+            
+        }else {
+            
+            $products = $repo -> findAll();
+            
+        }
+
         return $this->render('product/index.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'formRecherche' => $form->createView(),
         ]);
         
     }
@@ -39,6 +54,7 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
+            $brochureFile = $form->get('image')->getData();
             $product->setUser($user);
             $product->setCreatedAt(new \DateTimeImmutable);
             $entityManager->persist($product);
@@ -47,12 +63,35 @@ class ProductController extends AbstractController
 
             $this->addFlash("success", "Article bien créé, en attente de validation par un modérateur");
             return $this->redirectToRoute("app_product");
+                if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $product->setImage($newFilename);
+            }
+
+            // ... persist the $product variable or any other work
+
+            return $this->redirectToRoute('app_product_list');
         }
 
-        return $this->render('product/new.html.twig', [
-            "productForm" => $form->createView(),
+        return $this->renderForm('product/new.html.twig', [
+            'productForm' => $form,
         ]);
-
     }
 
     #[Route('/detail/{id}', name: 'product_show')]

@@ -8,20 +8,20 @@
 
 
 <div class="container mt-3">
-    <h1 class="text-center" style="color:white">Detail</h1>
+    <h1 class="text-center" style="color:#333">Detail</h1>
     <br>
-    <h2 class="text-center mb-3" style="color:white">Nom Activités : {{product.title}}</h2>
+    <h2 class="text-center mb-3" style="color:#333">Nom Produit : {{product.title}}</h2>
     <div class="d-flex flex-column justify-content-center">
         <div class="d-flex flex-row mb-3 mt-3 justify-content-center">
             <div class="d-flex flex-column col-4">
                 <img class="w-100" src="{{ asset('img/') ~ product.image }}" alt="Image de {{ product.title }}">
                 <br>
-                {# <div class="d-flex flex-column " style="color:white">
+                <div class="d-flex flex-column " style="color:#333">
                     Prix Produit : {{product.price}} $
-                </div> #}
+                </div>
                 <br>
-                <div class="d-flex flex-column" style="color:white">
-                    Commentaires de l'activité :
+                <div class="d-flex flex-column" style="color:#333">
+                    Commentaires du produit :
                     <br>
                     
                     {% set count = 0 %}

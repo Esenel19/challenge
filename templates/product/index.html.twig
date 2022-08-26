@@ -1,15 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Toute nos activités
+	Tout nos Produits
 {% endblock %}
 
 {% block body %}
+<br>
+	<h1 class="text-center" style="color:#333">Tout nos Produits</h1>
+<br>
+	<div class="d-flex justify-content-center">
+{{ form_start(formRecherche) }}
 
-	<h1 class="text-center" style="color:white">Toutes nos Activités</h1>
+        {{ form_widget(formRecherche.recherche, {
+            attr: {
+                placeholder: "Recherche produit",
+                
+            }
+        }) }}
 
+    {{ form_end(formRecherche) }}
+
+	</div>
 	<br>
-
 	<div class="row">
 		{% for product in products|sort((a, b) => a.title <=> b.title) %}
 			<div class"col-md4" style="padding:2%">
@@ -18,16 +30,16 @@
 					{# <img src="{{ product.image }}" alt="Image produit"> #}
 					<img class="w-100" src="{{ asset('img/') ~ product.image }}" alt="Image de {{ product.title }}">
 					<div class="card-body">
-						{# <p classe="card-text text-end fw-bold">
-							{{ product.price }} $</p> #}
+						<p classe="card-text text-end fw-bold">
+							{{ product.price }} $</p>
 					</div>
 					<div class="card-body text-end" style="padding: 2%;">
-						{# <a href="{{ path('cart_add', { id: product.id}) }}" class="card-link btn btn-primary">
-							Ajouter au panier</a> #}
+						<a href="{{ path('cart_add', { id: product.id}) }}" class="card-link btn btn-primary">
+							Ajouter au panier</a>
 					</div>
 					<div class="card-body text-end" style="padding: 2%;">
 						<a href="{{ path('product_show', { id: product.id}) }}" class="card-link btn btn-primary">
-						Details Activités</a>
+						Details Produits</a>
 					</div>
 				</div>
 			</div>
